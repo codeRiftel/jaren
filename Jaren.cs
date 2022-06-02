@@ -223,9 +223,11 @@ class Init {
             if (isArr) o.Append(src, v.start, v.len - 2); else o.Append(src, v.start, v.len);
             if (isArr) o.Append("[l[j].size];\n"); else o.Append("(l[j].size);\n");
             Indent(o, d);
+            o.Append("var size = l[j].size;\n");
+            Indent(o, d);
             o.Append("j++;\n");
             Indent(o, d);
-            o.Append("for (int k = 0; k < l[j].size && j < l.Length; k++) {\n");
+            o.Append("for (int k = 0; k < size && j < l.Length; k++) {\n");
             d++;
             if (isArr) v.len -= 2; else {
                 v.start += 5;
