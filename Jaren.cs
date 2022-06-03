@@ -188,9 +188,16 @@ class Init {
 
         Indent(o, d);
         if (isStr) {
+            o.Append("if (l[j].tok == Tok.Pri) ");
+            if (obj) o.Append("obj.");
+            o.Append(key);
+            o.Append(" = null; else {\n");
+            Indent(o, ++d);
             if (obj) o.Append("obj.");
             o.Append(key);
             o.Append(" = rin.Un(t.Substring(l[j].start, l[j].len));\n");
+            Indent(o, --d);
+            o.Append("}\n");
             Indent(o, d--);
             o.Append("j++;\n");
         } else if (num != null) {
