@@ -188,16 +188,16 @@ class Init {
 
         Indent(o, d);
         if (isStr) {
-            o.Append("if (l[j].tok == Tok.Pri) ");
-            if (obj) o.Append("obj.");
-            o.Append(key);
-            o.Append(" = null; else {\n");
+            o.Append("if (l[j].tok == Tok.Str) {\n");
             Indent(o, ++d);
             if (obj) o.Append("obj.");
             o.Append(key);
             o.Append(" = rin.Un(t.Substring(l[j].start, l[j].len));\n");
             Indent(o, --d);
-            o.Append("}\n");
+            o.Append("} else ");
+            if (obj) o.Append("obj.");
+            o.Append(key);
+            o.Append(" = null;\n");
             Indent(o, d--);
             o.Append("j++;\n");
         } else if (num != null) {
@@ -241,7 +241,12 @@ class Init {
                 v.len -= 6;
             }
             var arrKey = key + "[k]";
-            if (isList) arrKey = "var item";
+            if (isList) {
+                Indent(o, d);
+                o.Append(src, v.start, v.len);
+                o.Append(" item;\n");
+            }
+            if (isList) arrKey = "item";
             GenParse(src, o, arrKey, isArr, v, d);
             if (isList) {
                 Indent(o, d);
